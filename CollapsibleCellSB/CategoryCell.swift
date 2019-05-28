@@ -14,7 +14,6 @@ class CategoryCell: UITableViewCell {
     @IBOutlet weak var iconImg: UIImageView!
     @IBOutlet weak var categoryLbl: UILabel!
     @IBOutlet weak var isExpandedIndicatorImg: UIImageView!
-    
     @IBOutlet weak var indentCellOutlet: NSLayoutConstraint!
     
 
@@ -37,7 +36,7 @@ class CategoryCell: UITableViewCell {
         if indexPath.row == 0 && parentCategory.subcategories.count > 0 {
             iconImg.image = UIImage(named: parentCategory.iconImg.rawValue)
             iconBackground.backgroundColor = hexStringToUIColor(parentCategory.iconColor.rawValue)
-            categoryLbl.text = parentCategory.name
+            categoryLbl.text = "\(parentCategory.name) \("Section: \(indexPath.section)") \("Row: \(indexPath.row)")"
             indentCellOutlet.constant = 15.0
             isExpandedIndicatorImg.image = UIImage(named: "expandArrow")
             
@@ -45,6 +44,7 @@ class CategoryCell: UITableViewCell {
             if parentCategory.isParentCellExpanded {
                 isExpandedIndicatorImg.transform = CGAffineTransform(rotationAngle: convertRadiansToDegrees(90))
             } else {
+                //returns the arrow to its orig direction
                 isExpandedIndicatorImg.transform = .identity
             }
             
@@ -54,7 +54,7 @@ class CategoryCell: UITableViewCell {
         } else if indexPath.row == 0 && parentCategory.subcategories.count == 0 {
             iconImg.image = UIImage(named: parentCategory.iconImg.rawValue)
             iconBackground.backgroundColor = hexStringToUIColor(parentCategory.iconColor.rawValue)
-            categoryLbl.text = parentCategory.name
+            categoryLbl.text = "\(parentCategory.name) \("Section: \(indexPath.section)") \("Row: \(indexPath.row)")"
             isExpandedIndicatorImg.image = UIImage(named: "")
             indentCellOutlet.constant = 15.0
             
@@ -64,7 +64,8 @@ class CategoryCell: UITableViewCell {
             //this clause formats the cells for the subcategories because indexPath.row >=1
             iconImg.image = UIImage(named: parentCategory.subcategories[dataIndex].iconImg.rawValue)
             iconBackground.backgroundColor = hexStringToUIColor(parentCategory.subcategories[dataIndex].iconColor.rawValue)
-            categoryLbl.text = parentCategory.subcategories[dataIndex].name
+            //Keep in mind, the dataIndex subtracts 1 so index matches the array index
+            categoryLbl.text = "\(parentCategory.subcategories[dataIndex].name) \("Section: \(indexPath.section)") \("Row: \(indexPath.row)")"
             isExpandedIndicatorImg.image = UIImage(named: "")
             
             indentCellOutlet.constant = 30.0
